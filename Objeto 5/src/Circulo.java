@@ -1,9 +1,8 @@
 import java.awt.Graphics;
 import java.util.concurrent.ThreadLocalRandom;
 import java.awt.Color;
-import java.awt.Rectangle;
 
-public class Circulo implements Colidivel {
+public class Circulo {
     private static final int DIMENSAO = 3;
     private int posX, posY;
     private int maxPosX, maxPosY;
@@ -47,26 +46,21 @@ public class Circulo implements Colidivel {
         posX += velX;
         posY += velY;
 
-        if (posX <= 0 ||
-            posX + DIMENSAO >= maxPosX) {
-                velX *= -1;
-            }
-        if (posY <= 0 ||
-            posY + DIMENSAO >= maxPosY) {
-            velY *= -1;
-        }
-
         if (posX < 0) {
             posX = 0;
+            velX *= -1;
         }
         if (posY < 0) {
             posY = 0;
+            velY *= -1;
         }
         if (posX > maxPosX) {
             posX = maxPosX;
+            velX *= -1;
         }
         if (posY > maxPosY) {
             posY = maxPosY;
+            velY *= -1;
         }
 
         if (colidiu) {
@@ -79,45 +73,31 @@ public class Circulo implements Colidivel {
         }
     }
 
+    public boolean checarColisao(Circulo outro) {
+        if (((posX <= outro.getPosX() && posX + DIMENSAO >= outro.getPosX()) || 
+            (posX >= outro.getPosX() && posX <= outro.getPosX() + DIMENSAO)) && 
+            ((posY <= outro.getPosY() && posY + DIMENSAO >= outro.getPosY()) || 
+            (posY >= outro.getPosY() && posY <= outro.getPosY() + DIMENSAO))) {
+                
+            colidiu = true;
+        }
+
+        return colidiu;
+    }
+
+    public void onColisao() {
+        cor = Color.WHITE;
+    }
+
     public static int getDimensao() {
         return DIMENSAO;
     }
 
-    @Override
     public int getPosX() {
         return posX;
     }
 
-    @Override
     public int getPosY() {
         return posY;
-    }
-
-    @Override
-    public boolean checarColisao(Colidivel outro) {
-        if ((posX < outro.getPosX() && posX + DIMENSAO > outro.getPosX() && posY == outro.getPosY()) || 
-            (posX < outro.getPosX() && posX + DIMENSAO > outro.getPosX() && posY < outro.getPosY() && posY + DIMENSAO > outro.getPosY()) ||
-            (posX < outro.getPosX() && posX + DIMENSAO > outro.getPosX() && posY > outro.getPosY() && posY < outro.getPosY() + DIMENSAO) ||
-            (posX > outro.getPosX() && posX < outro.getPosX() + DIMENSAO && posY == outro.getPosY()) ||
-            (posX > outro.getPosX() && posX < outro.getPosX() + DIMENSAO && posY < outro.getPosY() && posY + DIMENSAO > outro.getPosY()) ||
-            (posX > outro.getPosX() && posX < outro.getPosX() + DIMENSAO && posY > outro.getPosY() && posY < outro.getPosY() + DIMENSAO) || 
-            (posX == outro.getPosX() && posY > outro.getPosY() && posY < outro.getPosY() + DIMENSAO) ||
-            (posX == outro.getPosX() && posY < outro.getPosY() && posY + DIMENSAO > outro.getPosY())) {
-            
-            velX *= -1;
-            velY *= -1;
-            colidiu = true;
-        }
-        return colidiu;
-    }
-
-    @Override
-    public Rectangle getColisaoRect() {
-        return new Rectangle(posX, posY, DIMENSAO, DIMENSAO);
-    }
-
-    @Override
-    public void onColisao(Colidivel outro) {
-        cor = Color.WHITE;
     }
 }
