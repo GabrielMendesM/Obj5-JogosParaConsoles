@@ -38,6 +38,7 @@ public class SimulacaoQuadTree extends Cena {
 
             for (Particula p : particulas) {
                 quadTree.inserir(p);
+                p.update();
             }
             quadTree.update();
             repaint();

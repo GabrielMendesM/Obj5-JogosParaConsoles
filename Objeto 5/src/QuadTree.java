@@ -33,7 +33,6 @@ public class QuadTree {
             if (sudoeste.inserir(p)) return true;
             if (sudeste.inserir(p)) return true;
         }
-
         return false;
     }
 
@@ -108,9 +107,5 @@ public class QuadTree {
         } else {
             quad.update(pQuery);
         }
-    }
-
-    public void saindo(Particula p) {
-        System.out.println(p);
     }
 }

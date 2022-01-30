@@ -31,11 +31,10 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         CORES_CIRCULO[0] = Color.BLUE;
         CORES_CIRCULO[1] = Color.CYAN;
         CORES_CIRCULO[2] = Color.GREEN;
-        CORES_CIRCULO[3] = Color.MAGENTA;
-        CORES_CIRCULO[4] = Color.ORANGE;
-        CORES_CIRCULO[5] = Color.PINK;
-        CORES_CIRCULO[6] = Color.RED;
-        CORES_CIRCULO[7] = Color.YELLOW;
+        CORES_CIRCULO[3] = Color.ORANGE;
+        CORES_CIRCULO[4] = Color.PINK;
+        CORES_CIRCULO[5] = Color.RED;
+        CORES_CIRCULO[6] = Color.YELLOW;
     }
 
     public void escolherPadrao(String padrao) {
@@ -58,8 +57,10 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
                     particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor, true));
                     break;
                 case "EM_ORDEM":
+                    if (x * )
                     x = i * PARTICULA_DIMENSAO * 2 + PARTICULA_DIMENSAO;
                     y = i % 2 == 0 ? PARTICULA_DIMENSAO * 2 : PARTICULA_DIMENSAO * 4;
+
                     particulaRect = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
                     particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor));
                     break;
