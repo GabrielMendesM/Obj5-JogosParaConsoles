@@ -95,7 +95,7 @@ public class Janela extends JFrame {
         pnlGUI = new JPanel();
         pnlGUI.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        //pnlGUI.add(btnNormal);
+        pnlGUI.add(btnNormal);
         pnlGUI.add(btnQuadTree);
 
         add(pnlGUI, BorderLayout.SOUTH);
@@ -133,14 +133,14 @@ public class Janela extends JFrame {
 
         GUILimpar();
         
-        Rectangle rect = new Rectangle(0, 0, LARGURA, ALTURA);
+        Rectangle rect = new Rectangle(0, 0, LARGURA - 20, ALTURA - 76);
 
         switch (tipoSimulacao) {
             case sNORMAL:
-                cena = new SimulacaoNormal(rect, this);
+                cena = new SimulacaoNormal(rect);
                 break;
             case sQUADTREE:
-                cena = new SimulacaoQuadTree(rect, this);
+                cena = new SimulacaoQuadTree(rect);
                 break;
         }
 
@@ -189,7 +189,9 @@ public class Janela extends JFrame {
     }
     //#endregion
 
+    /*
     public Rectangle getRect() {
         return new Rectangle(0, 0, LARGURA - 16, ALTURA - 76);
     }
+    */
 }

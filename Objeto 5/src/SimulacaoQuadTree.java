@@ -5,8 +5,8 @@ import java.awt.event.MouseEvent;
 public class SimulacaoQuadTree extends Cena {
     private QuadTree quadTree;
 
-    public SimulacaoQuadTree(Rectangle rect, Janela janela) {
-        super(rect, janela);
+    public SimulacaoQuadTree(Rectangle rect) {
+        super(rect);
         
         quadTree = new QuadTree(rect);
     }
@@ -29,13 +29,14 @@ public class SimulacaoQuadTree extends Cena {
         quadTree.paint(g, COR_FUNDO, COR_CONTORNO);
 
         for (Particula p : particulas) {
-            p.paint(g, CORES_CIRCULO[0]);            
+            p.paint(g);            
         }
     }
 
     @Override
     public void run() {
         while (rodando) {
+            quadTree.update();
             repaint();
             try {
                 Thread.sleep(INTERVALO_THREAD);
@@ -49,7 +50,6 @@ public class SimulacaoQuadTree extends Cena {
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
         quadTree.inserir(particulas.get(particulas.size() - 1));
-        nParticulas++;
         repaint();
     }
 }

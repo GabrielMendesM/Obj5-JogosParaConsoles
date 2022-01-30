@@ -14,14 +14,14 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     protected static final Color COR_FUNDO = Color.decode("#66546E");
     protected static final Color[] CORES_CIRCULO = new Color[8];
     private static final int PARTICULA_DIMENSAO = 3;
+    private static final int MAX_VELOCIDADE = 3;
 
     protected static final ArrayList<Particula> particulas = new ArrayList<>();
 
     protected Rectangle rect;
-    private static Janela janela;
     protected int nParticulas;
 
-    public Cena(Rectangle rect, Janela janela) {
+    public Cena(Rectangle rect) {
         this.rect = rect;
         
         CORES_CIRCULO[0] = Color.BLUE;
@@ -32,22 +32,32 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         CORES_CIRCULO[5] = Color.PINK;
         CORES_CIRCULO[6] = Color.RED;
         CORES_CIRCULO[7] = Color.YELLOW;
-
-        Cena.janela = janela;
     }
 
     public void escolherPadrao(String padrao) {
         int x = 0;
         int y = 0;
+        int velX = 1;
+        int velY = 1;
+        Rectangle particulaRect;// = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+
         for (int i = 0; i < nParticulas; i++) {
+            Color cor = CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)];
             switch(padrao) {
                 case "ALEATORIO":
-                    x = ThreadLocalRandom.current().nextInt(0, janela.getRect().width - PARTICULA_DIMENSAO);
-                    y = ThreadLocalRandom.current().nextInt(0, janela.getRect().height - PARTICULA_DIMENSAO);
+                    x = ThreadLocalRandom.current().nextInt(0, rect.width - PARTICULA_DIMENSAO);
+                    y = ThreadLocalRandom.current().nextInt(0, rect.height - PARTICULA_DIMENSAO);
+                    velX = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
+                    velY = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
+
+                    particulaRect = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+                    particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor, true));
                     break;
                 case "EM_ORDEM":
                     x = i * PARTICULA_DIMENSAO * 2 + PARTICULA_DIMENSAO;
                     y = i % 2 == 0 ? PARTICULA_DIMENSAO * 2 : PARTICULA_DIMENSAO * 4;
+                    particulaRect = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+                    particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor));
                     break;
                 case "X":
                     //NÃO IMPLEMENTADO
@@ -59,8 +69,6 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
                     System.out.print("NÃO IMPLEMENTADO!");
                     return;
             }
-            Rectangle particulaRect = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
-            particulas.add(new Particula(particulaRect));
         }
     }
 
@@ -97,7 +105,10 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     
     @Override
     public void mousePressed(MouseEvent e) {
-        particulas.add(new Particula(e.getX(), e.getY(), PARTICULA_DIMENSAO, PARTICULA_DIMENSAO));
+        Rectangle pRect = new Rectangle(e.getX(), e.getY(), PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+        int velX = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
+        int velY = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
+        particulas.add(new Particula(pRect, rect.width, rect.height, velX, velY, CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)], true));
         nParticulas++;
         repaint();
     }

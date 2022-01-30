@@ -14,9 +14,6 @@ public class QuadTree {
 
     public QuadTree(Rectangle rect) {
         this.quad = new Quad(rect);
-        
-        System.out.println(quad);
-
         dividido = false;
     }
 
@@ -26,7 +23,6 @@ public class QuadTree {
         }
         if (particulas.size() < CAP) {
             particulas.add(p);
-            System.out.println(this + ": " + particulas.size());
         } else {
             if (!dividido) {
                 subdividir(p);
@@ -60,7 +56,6 @@ public class QuadTree {
         Rectangle se = new Rectangle(x + w, y + h, w, h);
         sudeste = new QuadTree(se);       
 
-        
         for (int i = 0; i < particulas.size(); i++) {
             if (noroeste.inserir(particulas.get(i))) continue;
             if (nordeste.inserir(particulas.get(i))) continue;
@@ -77,6 +72,12 @@ public class QuadTree {
             nordeste.paint(g, corFundo, corQuad);
             sudoeste.paint(g, corFundo, corQuad);
             sudeste.paint(g, corFundo, corQuad);
+        }
+    }
+
+    public void update() {
+        for (Particula p : particulas) {
+            p.update();            
         }
     }
 }
