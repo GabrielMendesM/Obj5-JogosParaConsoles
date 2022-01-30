@@ -39,7 +39,7 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         int y = 0;
         int velX = 1;
         int velY = 1;
-        Rectangle particulaRect;// = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+        Rectangle particulaRect;
 
         for (int i = 0; i < nParticulas; i++) {
             Color cor = CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)];
@@ -96,16 +96,10 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
             }
         }   
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
     
     @Override
     public void mousePressed(MouseEvent e) {
-        Rectangle pRect = new Rectangle(e.getX(), e.getY(), PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+        Rectangle pRect = new Rectangle(e.getX() - PARTICULA_DIMENSAO / 2, e.getY() - PARTICULA_DIMENSAO / 2, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
         int velX = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
         int velY = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
         particulas.add(new Particula(pRect, rect.width, rect.height, velX, velY, CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)], true));
@@ -113,35 +107,25 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         repaint();
     }
 
+    //#region MouseInputListener não usados
     @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseExited(MouseEvent e) {}
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseDragged(MouseEvent e) {}
+
+    @Override
+    public void mouseMoved(MouseEvent e) {}
+    //#endregion
 
     public int getNParticulas() {
         return nParticulas;

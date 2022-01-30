@@ -23,6 +23,7 @@ public class QuadTree {
         }
         if (particulas.size() < CAP) {
             particulas.add(p);
+            return true;
         } else {
             if (!dividido) {
                 subdividir(p);

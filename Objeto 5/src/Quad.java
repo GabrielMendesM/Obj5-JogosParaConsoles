@@ -9,7 +9,7 @@ public class Quad extends Rectangle {
     }
 
     public boolean contem(Particula p) {
-        return (p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height);
+        return (p.x + p.width / 2 >= x && p.x + p.width / 2 <= x + width && p.y + p.height / 2 >= y && p.y + p.height / 2 <= y + height);
     }
 
     public void paint(Graphics g, Color corFundo, Color corContorno) {
