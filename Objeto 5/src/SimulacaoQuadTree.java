@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -7,16 +8,12 @@ public class SimulacaoQuadTree extends Cena {
 
     public SimulacaoQuadTree(Rectangle rect) {
         super(rect);
-        
+
         quadTree = new QuadTree(rect);
     }
 
     public void escolherPadrao(String padrao) {
         super.escolherPadrao(padrao);
-
-        for (Particula p : particulas) {
-            quadTree.inserir(p);
-        }
     }
 
     @Override
@@ -31,13 +28,31 @@ public class SimulacaoQuadTree extends Cena {
         for (Particula p : particulas) {
             p.paint(g);            
         }
+
+        /*if (rectCheck != null) {
+            g.setColor(Color.GREEN);
+            g.drawRect(rectCheck.x, rectCheck.y, rectCheck.width, rectCheck.height);
+        }*/
     }
 
     @Override
     public void run() {
-        while (rodando) {
+        while (rodando) {   
+            tempoProcessamento = System.nanoTime();
+                     
+            quadTree = new QuadTree(rect);
+
+            for (Particula p : particulas) {
+                //p.update();
+                quadTree.inserir(p);
+            }
             quadTree.update();
             repaint();
+            
+            tempoProcessamento = System.nanoTime() - tempoProcessamento;
+            totalTempoProcessamento += tempoProcessamento;
+            qtdProcessos++;
+
             try {
                 Thread.sleep(INTERVALO_THREAD);
             } catch (InterruptedException e) {

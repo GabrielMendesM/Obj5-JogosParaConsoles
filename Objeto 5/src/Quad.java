@@ -19,14 +19,12 @@ public class Quad extends Rectangle {
         g.drawRect(x, y, width, height);
     }
 
-    public void update(ArrayList<Particula> particulas) {        
+    public void update(ArrayList<Particula> particulas) {
         for (int i = 0; i < particulas.size(); i++) {
             particulas.get(i).update();
             for (int j = 0; j < particulas.size(); j++) {
                 if (i == j) continue;
-                if (particulas.get(i).checarColisao(particulas.get(j))) {
-                    particulas.get(i).onColisao();
-                }
+                if (particulas.get(i).checarColisao(particulas.get(j))) particulas.get(i).onColisao();
             }
         }
     }

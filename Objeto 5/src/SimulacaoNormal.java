@@ -21,6 +21,8 @@ public class SimulacaoNormal extends Cena {
     @Override
     public void run() {
         while (rodando) {
+            tempoProcessamento = System.nanoTime();
+
             for (int i = 0; i < particulas.size(); i++) {
                 particulas.get(i).update();
                 for (int j = 0; j < particulas.size(); j++) {
@@ -31,6 +33,10 @@ public class SimulacaoNormal extends Cena {
                 }
             }
             repaint();
+            tempoProcessamento = System.nanoTime() - tempoProcessamento;
+            totalTempoProcessamento += tempoProcessamento;
+            qtdProcessos++;
+            
             try {
                 Thread.sleep(INTERVALO_THREAD);
             } catch (InterruptedException e) {

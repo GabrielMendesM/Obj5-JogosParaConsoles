@@ -13,13 +13,19 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     protected static final Color COR_CONTORNO = Color.decode("#84728C");
     protected static final Color COR_FUNDO = Color.decode("#66546E");
     protected static final Color[] CORES_CIRCULO = new Color[8];
-    private static final int PARTICULA_DIMENSAO = 13;
+    private static final int PARTICULA_DIMENSAO = 3;
     private static final int MAX_VELOCIDADE = 3;
 
     protected static final ArrayList<Particula> particulas = new ArrayList<>();
 
     protected Rectangle rect;
     protected int nParticulas;
+
+    protected long tempoProcessamento = 0;
+    protected long totalTempoProcessamento = 0;
+    protected long qtdProcessos = 0;
+
+    //protected Rectangle rectCheck;
 
     public Cena(Rectangle rect) {
         this.rect = rect;
@@ -82,7 +88,9 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     }
     
     public void finalizar() {
-        rodando = false;        
+        rodando = false;
+        System.out.println("Média: " + (totalTempoProcessamento / qtdProcessos) + "ns");
+        System.exit(0);
     }
 
     @Override
@@ -105,6 +113,17 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         particulas.add(new Particula(pRect, rect.width, rect.height, velX, velY, CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)], true));
         nParticulas++;
         repaint();
+        /*
+        int largura = 100;
+        int altura = 100;
+        int x = e.getX() - largura / 2;
+        int y = e.getY() - altura / 2;
+        if (rectCheck != null) {
+            rectCheck.setLocation(x, y);
+        } else {
+            rectCheck = new Rectangle(x, y, largura, altura);
+        }
+        repaint();*/
     }
 
     //#region MouseInputListener não usados
@@ -126,10 +145,6 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     @Override
     public void mouseMoved(MouseEvent e) {}
     //#endregion
-
-    public int getNParticulas() {
-        return nParticulas;
-    }
     
     public void setNParticulas(int nParticulas) {
         this.nParticulas = nParticulas;

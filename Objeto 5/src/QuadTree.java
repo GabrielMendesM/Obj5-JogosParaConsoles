@@ -8,6 +8,7 @@ public class QuadTree {
 
     private Quad quad;
     private ArrayList<Particula> particulas = new ArrayList<>();
+    //private ArrayList<Particula> saindo = new ArrayList<>();
 
     private QuadTree noroeste, nordeste, sudoeste, sudeste;
     private boolean dividido;
@@ -63,6 +64,28 @@ public class QuadTree {
             if (sudoeste.inserir(particulas.get(i))) continue;
             if (sudeste.inserir(particulas.get(i))) continue;
         }
+        //particulas.clear();
+    }
+
+    public ArrayList<Particula> queryRange(Rectangle range) {
+        ArrayList<Particula> particulasInRange = new ArrayList<>();
+
+        if (!quad.intersects(range)) {
+            return particulasInRange;
+        }
+        for (Particula p : particulas) {
+            if (range.contains(p)) {
+                particulasInRange.add(p);
+            }
+        }
+        if (dividido) {
+            particulasInRange.addAll(noroeste.queryRange(range));
+            particulasInRange.addAll(nordeste.queryRange(range));
+            particulasInRange.addAll(sudoeste.queryRange(range));
+            particulasInRange.addAll(sudeste.queryRange(range));
+        }
+
+        return particulasInRange;
     }
 
     public void paint(Graphics g, Color corFundo, Color corQuad) {
@@ -77,6 +100,20 @@ public class QuadTree {
     }
 
     public void update() {
-        quad.update(particulas);
+        ArrayList<Particula> pQuery = queryRange(quad);
+
+        if (dividido) {
+            //saindo.clear();
+            noroeste.update();
+            nordeste.update();
+            sudoeste.update();
+            sudeste.update();
+        } else {
+            quad.update(pQuery);
+        }
+    }
+
+    public void saindo(Particula p) {
+        System.out.println(p);
     }
 }
