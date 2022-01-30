@@ -76,8 +76,6 @@ public class QuadTree {
     }
 
     public void update() {
-        for (Particula p : particulas) {
-            p.update();            
-        }
+        quad.update(particulas);
     }
 }

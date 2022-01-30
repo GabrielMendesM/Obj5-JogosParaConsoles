@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public class Quad extends Rectangle {
     public Quad(Rectangle rect) {
@@ -16,5 +17,17 @@ public class Quad extends Rectangle {
         g.fillRect(x, y, width, height);
         g.setColor(corContorno);
         g.drawRect(x, y, width, height);
+    }
+
+    public void update(ArrayList<Particula> particulas) {        
+        for (int i = 0; i < particulas.size(); i++) {
+            particulas.get(i).update();
+            for (int j = 0; j < particulas.size(); j++) {
+                if (i == j) continue;
+                if (particulas.get(i).checarColisao(particulas.get(j))) {
+                    particulas.get(i).onColisao();
+                }
+            }
+        }
     }
 }

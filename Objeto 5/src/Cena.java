@@ -13,7 +13,7 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     protected static final Color COR_CONTORNO = Color.decode("#84728C");
     protected static final Color COR_FUNDO = Color.decode("#66546E");
     protected static final Color[] CORES_CIRCULO = new Color[8];
-    private static final int PARTICULA_DIMENSAO = 3;
+    private static final int PARTICULA_DIMENSAO = 13;
     private static final int MAX_VELOCIDADE = 3;
 
     protected static final ArrayList<Particula> particulas = new ArrayList<>();

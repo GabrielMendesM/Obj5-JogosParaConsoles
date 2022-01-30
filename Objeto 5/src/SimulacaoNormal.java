@@ -29,7 +29,6 @@ public class SimulacaoNormal extends Cena {
                         particulas.get(i).onColisao();
                     }
                 }
-
             }
             repaint();
             try {
