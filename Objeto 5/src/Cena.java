@@ -25,8 +25,6 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     protected long totalTempoProcessamento = 0;
     protected long qtdProcessos = 0;
 
-    //protected Rectangle rectCheck;
-
     public Cena(Rectangle rect) {
         this.rect = rect;
         
@@ -113,17 +111,6 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         particulas.add(new Particula(pRect, rect.width, rect.height, velX, velY, CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)], true));
         nParticulas++;
         repaint();
-        /*
-        int largura = 100;
-        int altura = 100;
-        int x = e.getX() - largura / 2;
-        int y = e.getY() - altura / 2;
-        if (rectCheck != null) {
-            rectCheck.setLocation(x, y);
-        } else {
-            rectCheck = new Rectangle(x, y, largura, altura);
-        }
-        repaint();*/
     }
 
     //#region MouseInputListener não usados

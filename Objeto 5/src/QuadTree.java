@@ -8,7 +8,6 @@ public class QuadTree {
 
     private Quad quad;
     private ArrayList<Particula> particulas = new ArrayList<>();
-    //private ArrayList<Particula> saindo = new ArrayList<>();
 
     private QuadTree noroeste, nordeste, sudoeste, sudeste;
     private boolean dividido;
@@ -64,7 +63,6 @@ public class QuadTree {
             if (sudoeste.inserir(particulas.get(i))) continue;
             if (sudeste.inserir(particulas.get(i))) continue;
         }
-        //particulas.clear();
     }
 
     public ArrayList<Particula> queryRange(Rectangle range) {
@@ -103,7 +101,6 @@ public class QuadTree {
         ArrayList<Particula> pQuery = queryRange(quad);
 
         if (dividido) {
-            //saindo.clear();
             noroeste.update();
             nordeste.update();
             sudoeste.update();

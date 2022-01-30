@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -28,11 +27,6 @@ public class SimulacaoQuadTree extends Cena {
         for (Particula p : particulas) {
             p.paint(g);            
         }
-
-        /*if (rectCheck != null) {
-            g.setColor(Color.GREEN);
-            g.drawRect(rectCheck.x, rectCheck.y, rectCheck.width, rectCheck.height);
-        }*/
     }
 
     @Override
@@ -43,7 +37,6 @@ public class SimulacaoQuadTree extends Cena {
             quadTree = new QuadTree(rect);
 
             for (Particula p : particulas) {
-                //p.update();
                 quadTree.inserir(p);
             }
             quadTree.update();

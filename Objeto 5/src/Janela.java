@@ -190,10 +190,4 @@ public class Janela extends JFrame {
         cena.finalizar();
     }
     //#endregion
-
-    /*
-    public Rectangle getRect() {
-        return new Rectangle(0, 0, LARGURA - 16, ALTURA - 76);
-    }
-    */
 }
