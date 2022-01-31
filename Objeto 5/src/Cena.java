@@ -42,27 +42,46 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         int y = 0;
         int velX = 1;
         int velY = 1;
+
         Rectangle particulaRect;
+
+        int l = rect.width;
+        int a = rect.height;
+        int d = PARTICULA_DIMENSAO;
 
         for (int i = 0; i < nParticulas; i++) {
             Color cor = CORES_CIRCULO[ThreadLocalRandom.current().nextInt(0, CORES_CIRCULO.length)];
             switch(padrao) {
                 case "ALEATORIO":
-                    x = ThreadLocalRandom.current().nextInt(0, rect.width - PARTICULA_DIMENSAO);
-                    y = ThreadLocalRandom.current().nextInt(0, rect.height - PARTICULA_DIMENSAO);
+                    x = ThreadLocalRandom.current().nextInt(0, rect.width - d);
+                    y = ThreadLocalRandom.current().nextInt(0, rect.height - d);
                     velX = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
                     velY = ThreadLocalRandom.current().nextInt(1, MAX_VELOCIDADE);
 
-                    particulaRect = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+                    particulaRect = new Rectangle(x, y, d, d);
                     particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor, true));
                     break;
                 case "EM_ORDEM":
-                    if (x * )
-                    x = i * PARTICULA_DIMENSAO * 2 + PARTICULA_DIMENSAO;
-                    y = i % 2 == 0 ? PARTICULA_DIMENSAO * 2 : PARTICULA_DIMENSAO * 4;
+                    int maxPorLinha = l / (d * 4) + 1;
+                    int maxPorColuna = a / (d * 2);
+                    int max = maxPorLinha * maxPorColuna + 1;
 
-                    particulaRect = new Rectangle(x, y, PARTICULA_DIMENSAO, PARTICULA_DIMENSAO);
+                    if (i == max) {
+                        nParticulas = max;
+                        return;
+                    }
+
+                    if (i < maxPorLinha) {
+                        x = i * d * 4 + d;
+                        y = 0;
+                    } else {
+                        x = (i - (maxPorLinha * (i / maxPorLinha))) * d * 4 + d;
+                        y = i / maxPorLinha * d * 2 + d;
+                    }
+
+                    particulaRect = new Rectangle(x, y, d, d);
                     particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor));
+                    System.out.println(i);
                     break;
                 case "X":
                     //NÃO IMPLEMENTADO

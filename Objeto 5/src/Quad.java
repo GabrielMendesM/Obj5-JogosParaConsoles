@@ -20,7 +20,7 @@ public class Quad extends Rectangle {
     }
 
     public void update(ArrayList<Particula> particulas) {
-        for (int i = 0; i < particulas.size(); i++) {
+        for (int i = particulas.size() - 1; i > -1; i--) {
             for (int j = 0; j < particulas.size(); j++) {
                 if (i == j) continue;
                 if (particulas.get(i).checarColisao(particulas.get(j))) particulas.get(i).onColisao();

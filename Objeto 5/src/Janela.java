@@ -122,7 +122,7 @@ public class Janela extends JFrame {
         GUILimpar();
         pnlGUI.add(btnIniVazio);
         pnlGUI.add(btnIniAleatorio);
-        //pnlGUI.add(btnIniEmOrdem);
+        pnlGUI.add(btnIniEmOrdem);
         //pnlGUI.add(btnIniMoldura);
         //pnlGUI.add(bntIniX);
         pack();
