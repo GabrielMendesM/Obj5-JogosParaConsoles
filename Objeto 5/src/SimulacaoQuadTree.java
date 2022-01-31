@@ -8,8 +8,6 @@ public class SimulacaoQuadTree extends Cena {
     public SimulacaoQuadTree(Rectangle rect) {
         super(rect);
 
-        System.out.println(rect);
-
         quadTree = new QuadTree(rect);
     }
 
