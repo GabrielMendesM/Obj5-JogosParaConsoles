@@ -10,8 +10,8 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 public class Janela extends JFrame {
-    private static final int LARGURA = 420;// 1366;
-    private static final int ALTURA = 476; //730;
+    private static final int LARGURA = 660;
+    private static final int ALTURA = 716;
     private Cena cena;
 
     //#region GUI
