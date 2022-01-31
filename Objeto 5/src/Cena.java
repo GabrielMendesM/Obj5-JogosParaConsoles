@@ -81,7 +81,6 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
 
                     particulaRect = new Rectangle(x, y, d, d);
                     particulas.add(new Particula(particulaRect, rect.width, rect.height, velX, velY, cor));
-                    System.out.println(i);
                     break;
                 case "X":
                     //NÃO IMPLEMENTADO
