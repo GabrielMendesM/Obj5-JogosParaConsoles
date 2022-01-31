@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
@@ -24,9 +28,14 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
     protected long tempoProcessamento = 0;
     protected long totalTempoProcessamento = 0;
     protected long qtdProcessos = 0;
+    private String nomeArquivo;
+    private EscreverMedia escreverMedia;
 
-    public Cena(Rectangle rect) {
+    protected Thread loop;
+
+    public Cena(Rectangle rect, String nomeArquivo) {
         this.rect = rect;
+        this.nomeArquivo = nomeArquivo;
         
         CORES_CIRCULO[0] = Color.BLUE;
         CORES_CIRCULO[1] = Color.CYAN;
@@ -35,6 +44,8 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
         CORES_CIRCULO[4] = Color.PINK;
         CORES_CIRCULO[5] = Color.RED;
         CORES_CIRCULO[6] = Color.YELLOW;
+
+        loop = new Thread(this);
     }
 
     public void escolherPadrao(String padrao) {
@@ -101,26 +112,48 @@ public class Cena extends JPanel implements Runnable, MouseInputListener {
 
     public void comecar() {
         rodando = true;
-        new Thread(this).start();
+        loop.start();
+        escreverMedia = new EscreverMedia(this);
+        escreverMedia.comecar();
     }
     
     public void finalizar() {
+        escreverMedia.parar();
         rodando = false;
-        System.out.println("Média: " + (totalTempoProcessamento / qtdProcessos) + "ns");
+        escreverMedia(-1);
+        try {
+            loop.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
+    }
+    
+    public void escreverMedia(int id) {
+        if (qtdProcessos == 0) return;
+
+        Path path = Path.of("src/Txt/" + nomeArquivo + ".txt");
+        String media = (id == -1 ? "Média final" : "[" + id + "]") + " n=" + nParticulas + ": " + (totalTempoProcessamento / qtdProcessos) + "ns";
+
+        if (Files.isReadable(path)) {
+            try {
+                String txt = Files.readString(path);
+                if (txt == "") {
+                    txt = media;
+                } else {
+                    txt = txt + "\n" + media;
+                }
+                Files.writeString(path, txt);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Não foi possível escrever no arquivo.");
+        }
     }
 
     @Override
-    public void run() {
-        while (rodando) {
-            repaint();
-            try {
-                Thread.sleep(INTERVALO_THREAD);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }   
-    }
+    public void run() {}
     
     @Override
     public void mousePressed(MouseEvent e) {

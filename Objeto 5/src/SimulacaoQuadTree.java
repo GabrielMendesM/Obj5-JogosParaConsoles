@@ -6,7 +6,7 @@ public class SimulacaoQuadTree extends Cena {
     private QuadTree quadTree;
 
     public SimulacaoQuadTree(Rectangle rect) {
-        super(rect);
+        super(rect, "quadTree");
 
         quadTree = new QuadTree(rect);
     }

@@ -3,7 +3,7 @@ import java.awt.Rectangle;
 
 public class SimulacaoNormal extends Cena {
     public SimulacaoNormal(Rectangle rect) {
-        super(rect);
+        super(rect, "normal");
     }    
 
     @Override
