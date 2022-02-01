@@ -8,7 +8,7 @@ public class SimulacaoQuadTree extends Cena {
     public SimulacaoQuadTree(Rectangle rect) {
         super(rect, "quadTree");
 
-        quadTree = new QuadTree(rect);
+        quadTree = new QuadTree(rect, PARTICULA_DIMENSAO);
     }
 
     public void escolherPadrao(String padrao) {
@@ -34,7 +34,7 @@ public class SimulacaoQuadTree extends Cena {
         while (rodando) {   
             tempoProcessamento = System.nanoTime();
                      
-            quadTree = new QuadTree(rect);
+            quadTree = new QuadTree(rect, PARTICULA_DIMENSAO);
 
             for (Particula p : particulas) {
                 quadTree.inserir(p);

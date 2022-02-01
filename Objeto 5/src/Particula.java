@@ -10,8 +10,6 @@ public class Particula extends Rectangle {
     private Color corOriginal;
 
     private boolean colidiu = false;
-    private int timerCor = 0;
-    private static final int TIMER_COR_MAX = 10;
 
     public Particula(Rectangle rect, int telaLargura, int telaAltura, int velX, int velY, Color cor) {
         super(rect);
@@ -75,6 +73,8 @@ public class Particula extends Rectangle {
             (y >= outro.y && y <= outro.y + outro.height))) {
                 
             colidiu = true;
+        } else {
+            colidiu = false;
         }
         return colidiu;
     }
@@ -92,13 +92,8 @@ public class Particula extends Rectangle {
     public void update() {
         mover();
 
-        if (colidiu) {
-            timerCor++;
-            if (timerCor > TIMER_COR_MAX) {
-                timerCor = 0;
-                cor = corOriginal;
-                colidiu = false;
-            }
+        if (!colidiu) {
+            cor = corOriginal;
         }
     }
 }

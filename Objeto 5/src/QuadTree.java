@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 public class QuadTree {    
     private static final int CAP = 4;
+    private final int P_DIMENSAO;
 
     private Quad quad;
     private ArrayList<Particula> particulas = new ArrayList<>();
@@ -12,9 +13,10 @@ public class QuadTree {
     private QuadTree noroeste, nordeste, sudoeste, sudeste;
     private boolean dividido;
 
-    public QuadTree(Rectangle rect) {
+    public QuadTree(Rectangle rect, int particulaDimensao) {
         this.quad = new Quad(rect);
         dividido = false;
+        this.P_DIMENSAO = particulaDimensao;
     }
 
     public boolean inserir(Particula p) {
@@ -45,16 +47,16 @@ public class QuadTree {
         int h = quad.height / 2;
 
         Rectangle no = new Rectangle(x, y, w, h);
-        noroeste = new QuadTree(no);
+        noroeste = new QuadTree(no, P_DIMENSAO);
         
         Rectangle ne = new Rectangle(x + w, y, w, h);
-        nordeste = new QuadTree(ne);
+        nordeste = new QuadTree(ne, P_DIMENSAO);
         
         Rectangle so = new Rectangle(x, y + h, w, h);
-        sudoeste = new QuadTree(so);
+        sudoeste = new QuadTree(so, P_DIMENSAO);
         
         Rectangle se = new Rectangle(x + w, y + h, w, h);
-        sudeste = new QuadTree(se);       
+        sudeste = new QuadTree(se, P_DIMENSAO);       
 
         for (int i = 0; i < particulas.size(); i++) {
             if (noroeste.inserir(particulas.get(i))) continue;
@@ -94,11 +96,14 @@ public class QuadTree {
             sudoeste.paint(g, corFundo, corQuad);
             sudeste.paint(g, corFundo, corQuad);
         }
+
+        g.setColor(Color.GREEN);
     }
 
     public void update() {
-        ArrayList<Particula> pQuery = queryRange(quad);
-
+        Rectangle queryRect = new Rectangle(quad.x - P_DIMENSAO, quad.y - P_DIMENSAO, quad.width + P_DIMENSAO, quad.height + P_DIMENSAO);
+        ArrayList<Particula> pQuery = queryRange(queryRect);
+        
         if (dividido) {
             noroeste.update();
             nordeste.update();
